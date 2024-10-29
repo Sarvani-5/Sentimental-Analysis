@@ -1,20 +1,29 @@
-# Use an official Python runtime as a parent image
-FROM python:3.10-slim
+# Use a multi-stage build to optimize the image size
+FROM python:3.12-slim as base
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy the requirements.txt file
+COPY requirements.txt ./  # Assuming the file is in the root directory
 
-# Install any needed packages specified in requirements.txt
+# Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port the app runs on
-EXPOSE 5000
+# Stage 1: Copy Flask API files
+FROM base as flask_api
 
-# Define environment variable
-ENV FLASK_APP=app.py
+# Copy the Flask API files
+COPY flask_api/ ./flask_api/
 
-# Run the application
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Stage 2: Copy Streamlit app files
+FROM base as streamlit_app
+
+# Copy the Streamlit app files
+COPY streamlit_app/ ./streamlit_app/
+
+# Expose the ports for Flask API and Streamlit app
+EXPOSE 5000 8501
+
+# Start both applications
+CMD ["sh", "-c", "python flask_api/app.py & streamlit run streamlit_app/streamlit_app.py --server.port 8501 --server.address 0.0.0.0"]
