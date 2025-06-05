@@ -1,0 +1,4 @@
+{"asctime": "2025-03-06 02:53:40,938", "levelname": "INFO", "name": "sentiment_logger", "message": "Home page accessed"}
+{"asctime": "2025-03-06 02:53:51,533", "levelname": "INFO", "name": "sentiment_logger", "message": "Home page accessed"}
+{"asctime": "2025-03-06 02:54:00,849", "levelname": "INFO", "name": "sentiment_logger", "message": "Sentiment Prediction Request", "data": {"input_text": "The product was good", "input_length": 20}}
+{"asctime": "2025-03-06 02:54:01,673", "levelname": "INFO", "name": "sentiment_logger", "message": "Sentiment Prediction Result", "data": {"input_text": "The product was good", "sentiment": "Positive", "probabilities": {"positive": 0.7192225362071885, "negative": 0.28077746379281177}, "full_result": {"sentiment": "Positive", "positive_probability": 0.7192225362071885, "negative_probability": 0.28077746379281177, "neutral_threshold_applied": "False"}}}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Tool</title>
+    <style>
+        body, html {
+            margin: 0;
+            background-color: #f0f4f8;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        label {
+            margin-bottom: 10px;
+            display: block;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #bc6c25;
+            resize: none;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        textarea:focus {
+            border-color: #bc6c25;
+            outline: none;
+        }
+        
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #bc6c25;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #dda15e;
+        }
+        
+        .result-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #606c38;
+        }
+        
+        /* Styling for sentiments */
+        .positive-sentiment {
+            color: #28a745;
+        }
+        
+        .negative-sentiment {
+            color: #dc3545;
+        }
+        
+        .neutral-sentiment {
+            color: #6c757d; /* Gray color for neutral sentiment */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sentiment Analysis Tool</h1>
+        
+        <form action="/predict" method="POST">
+            <label for="content">Enter Text:</label>
+            <textarea id="content" name="text" placeholder="Type your text here..." required>{{ request.form.text }}</textarea>
+            <input type="submit" value="Analyze Sentiment">
+        </form>
+
+        <div id="resultContainer" class="result-container {% if result %}show{% endif %}">
+            <h2>Prediction Result:</h2>
+            <p id="result" class="result {% if result %} {% if result.sentiment == 'Positive' %}positive-sentiment{% elif result.sentiment == 'Negative' %}negative-sentiment{% else %}neutral-sentiment{% endif %}{% else %}neutral-sentiment{% endif %}">
+                Sentiment: {% if result %}{{ result.sentiment }}{% else %}N/A{% endif %}
+            </p>
+        </div>
+    </div>
+</body>
+</html>
